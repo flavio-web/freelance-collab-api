@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import axios from 'axios';
+import { ConfigService } from '@nestjs/config';
 import { FirebaseService } from '../firebase/firebase.service';
 import { RegisterDto } from './dto/register.dto/register.dto';
-import { FIREBASE_AUTH_ERRORS } from 'src/firebase/firebase-errors';
-import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
+import { FIREBASE_AUTH_ERRORS } from '../firebase/firebase-errors';
 
 @Injectable()
 export class AuthService {
