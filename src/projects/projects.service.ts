@@ -49,18 +49,9 @@ export class ProjectsService {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return snapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
   }
-  async findAllByCategory(category?: string) {
+  async findAllByCategory(category: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    let query: any = this.collection;
-    if (category) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      query = query.where('categoria', '==', category).where('estado', '==', 'HABILITADO');
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      query = query.where('estado', '==', 'HABILITADO');
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const snapshot = await query.get();
+    const snapshot = await this.collection.where('categoria', '==', category).get();
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return snapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));

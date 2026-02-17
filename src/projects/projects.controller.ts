@@ -19,12 +19,17 @@ export class ProjectsController {
     };
   }
 
-  @Get()
-  async findAllByCategory(@Req() req) {
+  @Get('/by-category/:category')
+  async findAllByCategory(@Param('category') category: string) {
+    if (category) {
+      if (category == 'ux') {
+        category = 'ui/ux';
+      }
+    }
     return {
       status: true,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data: await this.service.findAllByCategory(req?.category ?? undefined),
+      data: await this.service.findAllByCategory(category),
     };
   }
 
@@ -36,12 +41,13 @@ export class ProjectsController {
       data: await this.service.findAllHability(),
     };
   }
-  @Get()
-  async findAll() {
+
+  @Get('/me')
+  async findMe(@Req() req) {
     return {
       status: true,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data: await this.service.findAllHability(),
+      data: await this.service.findMe(req.user.uid),
     };
   }
 
@@ -53,7 +59,7 @@ export class ProjectsController {
       data: await this.service.findOne(id, req.user.uid),
     };
   }
-
+ 
   @Put(':id')
   async update(@Param('id') id: string, @Req() req, @Body() dto: UpdateProjectDto) {
     return {
