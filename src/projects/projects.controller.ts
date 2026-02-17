@@ -20,11 +20,28 @@ export class ProjectsController {
   }
 
   @Get()
-  async findAll(@Req() req) {
+  async findAllByCategory(@Req() req) {
     return {
       status: true,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      data: await this.service.findAll(req.user.uid),
+      data: await this.service.findAllByCategory(req?.category ?? undefined),
+    };
+  }
+
+  @Get()
+  async findAllHability() {
+    return {
+      status: true,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      data: await this.service.findAllHability(),
+    };
+  }
+  @Get()
+  async findAll() {
+    return {
+      status: true,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      data: await this.service.findAllHability(),
     };
   }
 

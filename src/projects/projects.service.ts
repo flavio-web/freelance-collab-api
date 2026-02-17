@@ -34,9 +34,33 @@ export class ProjectsService {
     };
   }
 
-  async findAll(ownerId: string) {
+  async findMe(ownerId: string) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const snapshot = await this.collection.where('ownerId', '==', ownerId).get();
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    return snapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
+  }
+
+  async findAllHability() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const snapshot = await this.collection.where('estado', '==', 'HABILITADO').get();
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    return snapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
+  }
+  async findAllByCategory(category?: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    let query: any = this.collection;
+    if (category) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      query = query.where('categoria', '==', category).where('estado', '==', 'HABILITADO');
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      query = query.where('estado', '==', 'HABILITADO');
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const snapshot = await query.get();
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     return snapshot.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
