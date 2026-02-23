@@ -59,7 +59,7 @@ export class ProjectsController {
       data: await this.service.findOne(id, req.user.uid),
     };
   }
- 
+
   @Put(':id')
   async update(@Param('id') id: string, @Req() req, @Body() dto: UpdateProjectDto) {
     return {

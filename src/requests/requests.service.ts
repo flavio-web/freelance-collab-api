@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { CreateRequestDto } from './dto/create-request.dto';
@@ -28,11 +29,9 @@ export class RequestsService {
       throw new BadRequestException('El proyecto no acepta solicitudes');
     }
 
-     // Validar que el owner no se auto-solicite
+    // Validar que el owner no se auto-solicite
     if (project.ownerId === userId) {
-      throw new BadRequestException(
-        'No puedes enviar una solicitud a tu propio proyecto',
-      );
+      throw new BadRequestException('No puedes enviar una solicitud a tu propio proyecto');
     }
 
     // Evitar solicitudes duplicadas
@@ -189,14 +188,9 @@ export class RequestsService {
         const data = doc.data();
 
         // usuario solicitante
-        const userSnap = await this.db
-          .collection('users')
-          .doc(data.userId)
-          .get();
+        const userSnap = await this.db.collection('users').doc(data.userId).get();
 
-        const user = userSnap.exists
-          ? { id: userSnap.id, ...userSnap.data() }
-          : null;
+        const user = userSnap.exists ? { id: userSnap.id, ...userSnap.data() } : null;
 
         return {
           id: doc.id,
