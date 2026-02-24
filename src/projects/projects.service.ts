@@ -116,9 +116,9 @@ export class ProjectsService {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const doc = await this.collection.doc(id).get();
 
-    if (!doc.exists || doc.data().ownerId !== ownerId) {
+    /* if (!doc.exists || doc.data().ownerId !== ownerId) {
       throw new NotFoundException('Proyecto no encontrado');
-    }
+    } */
 
     const userSnap = await this.db.collection('users').doc(ownerId).get();
 
