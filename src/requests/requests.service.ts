@@ -158,9 +158,9 @@ export class RequestsService {
     const project = projectSnap.data();
 
     //Solo el dueño puede ver solicitudes
-    if (project.ownerId !== userId) {
+    /* if (project.ownerId !== userId) {
       throw new ForbiddenException('No tienes acceso a este proyecto');
-    }
+    } */
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let query: FirebaseFirestore.Query = this.db
